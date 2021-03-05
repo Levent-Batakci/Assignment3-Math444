@@ -14,14 +14,10 @@ function Q = LDA(X, I, k)
     Xc = X - c0 * ones(1, p);
     
     %Compute the within cluster scatter
-    S = zeros(n, n, k);
     Sw = zeros(n, n); %Within cluster scatter
     for i = 1:k
-        for x = X(:, (I==i))
-            c_ = x - C(1,i); 
-            S(:,:, i) = S(:,:, i) + c_*(c_');
-        end
-        Sw = Sw + S(:,:,i);
+        Xi = X(:, I==i) - C(1,i) * ones(1, nnz(I==i));
+        Sw = Sw + Xi*Xi';
     end
     
     %Adjust Sw
@@ -37,7 +33,7 @@ function Q = LDA(X, I, k)
     %Compute the Cholesky factorization of Sw,eps
     K = chol(Sw);
     
-   [W, D] = eigs(inv(K') * Sb * inv(K), k-1);
+   [W, D] = eigs(inv(K)' * Sb * inv(K), k-1);
     
    Q = K \ W;
 end

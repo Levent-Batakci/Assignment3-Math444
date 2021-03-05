@@ -1,6 +1,11 @@
 %Levent Batakci
 %Test the stuff !
 
+clear
+clc
+clf
+close all
+
 %Parameters
 k=3;
 
@@ -18,9 +23,11 @@ Z = Q' * X;
 
 figure(1)
 p = 200;
+hold on
 scatter(Z(1,1:p), Z(2,1:p), 'r');
 scatter(Z(1,p+1:2*p), Z(2,p+1:2*p), 'g');
 scatter(Z(1,2*p+1:3*p), Z(2,2*p+1:3*p), 'b');
+hold off
 
 figure(2)
 scatter3(X(1,:), X(2,:), X(3,:));
