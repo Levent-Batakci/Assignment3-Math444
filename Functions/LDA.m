@@ -33,7 +33,7 @@ function Q = LDA(X, I, k)
     %Compute the Cholesky factorization of Sw,eps
     K = chol(Sw);
     
-   [W, D] = eigs(inv(K)' * Sb * inv(K), k-1);
+   [W, D] = eigs(K'\Sb/K, k-1);
     
    Q = K \ W;
 end

@@ -3,7 +3,6 @@
 
 clear
 clc
-clf
 close all
 
 %Parameters
