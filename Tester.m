@@ -14,11 +14,12 @@ c2 = [2 0 0]' * ones(1, 200);
 c3 = [4 4 -6]' * ones(1, 200);
 dev = [1 1 1]' * ones(1, 200);
 X = [normrnd(c1, dev) normrnd(c2, dev) normrnd(c3, dev)];
+xc = sum(X,2)/600;
+Xc = X - xc * ones(1, size(X,2));
 I = [ones(1, 200) 2*ones(1, 200) 3*ones(1, 200)];
 
-Q = LDA(X, I, k)
-
-Z = Q' * X;
+Q = LDA(Xc, I, k)
+Z = Q' * Xc;
 
 figure(1)
 p = 200;
@@ -30,3 +31,5 @@ hold off
 
 figure(2)
 scatter3(X(1,:), X(2,:), X(3,:));
+
+testLDA(X', I);
