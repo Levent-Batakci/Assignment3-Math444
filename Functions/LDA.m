@@ -1,11 +1,15 @@
-function Q = myLDA(X, I, k)
+function Q = LDA(X, I)
 %LDA returns the leading directions to project the data
 
-    %Get the dimensions
+    %Get the dimensions and labels
     [n, p] = size(X);
+    labels = unique(I);
+    k = numel(labels);
+    
     P = zeros(1,k); %Number of elements per cluster
     for i = 1:k
-        P(1,i) = nnz(I == i);
+        g = labels(i);
+        P(1,i) = nnz(I == g);
     end
 
     %Compute the group centers

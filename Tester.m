@@ -18,7 +18,7 @@ xc = sum(X,2)/600;
 Xc = X - xc * ones(1, size(X,2));
 I = [ones(1, 200) 2*ones(1, 200) 3*ones(1, 200)];
 
-Q = LDA(Xc, I, k)
+Q = LDA(Xc, I);
 Z = Q' * Xc;
 
 figure(1)
@@ -27,9 +27,12 @@ hold on
 scatter(Z(1,1:p), Z(2,1:p), 'r');
 scatter(Z(1,p+1:2*p), Z(2,p+1:2*p), 'g');
 scatter(Z(1,2*p+1:3*p), Z(2,2*p+1:3*p), 'b');
+sgtitle("Data Separation by LDA", 'FontSize', 25)
+xlabel("Projection on First Separator");
+ylabel("Projection on Second Separator");
+set(gca,'FontSize', 20);
 hold off
 
+%Testing purposes
 figure(2)
 scatter3(X(1,:), X(2,:), X(3,:));
-
-testLDA(X', I);
