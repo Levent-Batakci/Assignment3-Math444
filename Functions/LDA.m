@@ -1,4 +1,4 @@
-function Q = LDA(X, I)
+function [Q, Sw_eps, Sb, eps] = LDA(X, I)
 %LDA returns the leading directions to project the data
 
     %Get the dimensions and labels
@@ -26,9 +26,10 @@ function Q = LDA(X, I)
     %Adjust Sw
     E = eigs(Sw);
     d1 = E(1);
-    eps = 10e-10 * d1^2;
-    %Sw = U * diag(diag(D) + eps) * V';
-    Sw = Sw + eps * eye(n); 
+    tau = 10^-10; 
+    eps = tau*(d1^2);
+    Sw_eps = Sw + eps.*eye(n,n);
+ 
     
     %Compute Sb, the between-cluster scatter matrix
     Sb = zeros(n,n);
@@ -38,10 +39,10 @@ function Q = LDA(X, I)
     end
     
     %Compute the Cholesky factorization of Sw,eps
-    K = chol(Sw);
+    K = chol(Sw_eps);
     
    [W, E] = eigs((K'\Sb)/K, k-1);
-
+   
    Q = K \ W;
 end
 
